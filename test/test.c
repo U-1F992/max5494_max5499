@@ -1,7 +1,6 @@
 #include "max5494_max5499.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "test_init.h"
 #include "test_write_wiper_register.h"
