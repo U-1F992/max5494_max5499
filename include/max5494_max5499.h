@@ -41,7 +41,7 @@ extern "C"
         MAX5494_MAX5499_RA1 = 2
     } max5494_max5499_register_t;
 
-#define MAX5494_MAX5499_D_MAX ((uint16_t) /* 0b11'1111'1111 */ 0x3FF)
+#define MAX5494_MAX5499_D_MAX ((uint16_t) /* 0b11'11111111 */ 0x3FF)
 
 #define max5494_max5499_internal_write(max5494_max5499, c, ra) (((max5494_max5499) != NULL &&                                                                                                \
                                                                  ((c) == MAX5494_MAX5499_COPY_WIPER_REGISTER_TO_NV_REGISTER || (c) == MAX5494_MAX5499_COPY_NV_REGISTER_TO_WIPER_REGISTER) && \
@@ -56,7 +56,7 @@ extern "C"
                                                                       (d) <= MAX5494_MAX5499_D_MAX)                                                                       \
                                                                          ? ((max5494_max5499)->buffer_[0] = (uint8_t)(((c) << 4) | (ra)),                                 \
                                                                             (max5494_max5499)->buffer_[1] = (uint8_t)((d) >> 2),                                          \
-                                                                            (max5494_max5499)->buffer_[2] = (uint8_t)(((d) & /*0b0000'0011*/ 0x03) << 6),                 \
+                                                                            (max5494_max5499)->buffer_[2] = (uint8_t)(((d) & /* 0b00000011 */ 0x03) << 6),                \
                                                                             (max5494_max5499)->writer_->write((max5494_max5499)->writer_, (max5494_max5499)->buffer_, 3)) \
                                                                          : MAX5494_MAX5499_EINVAL)
 
