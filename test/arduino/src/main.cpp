@@ -25,7 +25,7 @@ static const pin_size_t PIN_SPI_CS = 5;
 static const pin_size_t PIN_W1 = 26;
 static const pin_size_t PIN_W2 = 27;
 
-static MAX5494_MAX5499 max5494(&SPI, PIN_SPI_CS);
+static MAX5494_MAX5499Wrapper max5494(&SPI, PIN_SPI_CS);
 
 void setup()
 {

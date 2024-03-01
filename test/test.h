@@ -7,8 +7,8 @@
 #include <stdbool.h>
 
 #define TEST_FOR(cases) \
-    test_case_t case_;  \
-    for (size_t i = 0; case_ = (cases)[i], i < sizeof((cases)) / sizeof(test_case_t); i++)
+    TestCase case_;     \
+    for (size_t i = 0; case_ = (cases)[i], i < sizeof((cases)) / sizeof(TestCase); i++)
 
 #define TEST_MAX5494_MAX5499_ERROR(e) ((e) == MAX5494_MAX5499_OK       ? "MAX5494_MAX5499_OK"     \
                                        : (e) == MAX5494_MAX5499_EIO    ? "MAX5494_MAX5499_EIO"    \
@@ -24,29 +24,20 @@
         continue;                                                                                         \
     }
 
-#define TEST_ASSERT_EQUAL_MAX5494_MAX5499_ERROR_PRE_RET(expected_ret, actual_ret)                         \
-    if ((expected_ret) != (actual_ret))                                                                   \
-    {                                                                                                     \
-        fprintf(stderr, "index: %d-pre, expected_ret: %s, actual_ret: %s\n",                              \
-                i, TEST_MAX5494_MAX5499_ERROR((expected_ret)), TEST_MAX5494_MAX5499_ERROR((actual_ret))); \
-        cnt++;                                                                                            \
-        continue;                                                                                         \
-    }
-
 #define TEST_SPI_SIZE ((size_t)8)
 
-typedef struct test_spi_writer_t
+typedef struct TestSPIWriter
 {
-    max5494_max5499_spi_writer_t parent;
+    MAX5494_MAX5499SPIWriter parent;
     uint8_t last_data[TEST_SPI_SIZE];
     size_t last_size;
-} test_spi_writer_t;
+} TestSPIWriter;
 
-max5494_max5499_error_t test_spi_writer_write(max5494_max5499_spi_writer_t *parent, uint8_t data[], size_t size)
+MAX5494_MAX5499ErrNo test_spi_writer_write(MAX5494_MAX5499SPIWriter *parent, uint8_t data[], size_t size)
 {
     assert(parent != NULL);
     assert(size < TEST_SPI_SIZE);
-    test_spi_writer_t *writer = (test_spi_writer_t *)parent;
+    TestSPIWriter *writer = (TestSPIWriter *)parent;
     for (size_t i = 0; i < size; i++)
     {
         writer->last_data[i] = data[i];
